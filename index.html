@@ -427,11 +427,7 @@
         </div>
 
         <div class="form-card">
-            <form action="https://formspree.io/f/mwpjjpdy" method="POST">
-                
-                <!-- REDIRECT FIELD -->
-                <input type="hidden" name="_redirect" value="https://atxcre.com/#contact-thanks">
-
+            <form id="contact-form" action="https://formspree.io/f/mwpjjpdy" method="POST">
                 <div class="form-grid">
 
                     <div class="form-field">
@@ -557,19 +553,39 @@
         © 2025 ATXCRE.COM
     </div>
 
-    <!-- THANK YOU SCRIPT -->
+    <!-- AJAX FORM SUBMIT (NO REDIRECT) -->
     <script>
-      (function() {
-        if (window.location.hash === '#contact-thanks') {
-          var msg = document.getElementById('contact-thanks');
-          if (msg) msg.style.display = 'block';
+      document.addEventListener('DOMContentLoaded', function () {
+        var form = document.getElementById('contact-form');
+        var thankyou = document.getElementById('contact-thanks');
 
-          var contact = document.getElementById('contact');
-          if (contact) {
-            contact.scrollIntoView({ behavior: 'smooth' });
-          }
-        }
-      })();
+        if (!form) return;
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          var data = new FormData(form);
+
+          fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          }).then(function (response) {
+            if (response.ok) {
+              if (thankyou) {
+                thankyou.style.display = 'block';
+              }
+              form.reset();
+              thankyou.scrollIntoView({ behavior: 'smooth' });
+            } else {
+              // optional: show an error message
+              alert('There was a problem submitting the form. Please try again.');
+            }
+          }).catch(function () {
+            alert('There was a problem submitting the form. Please try again.');
+          });
+        });
+      });
     </script>
 
 </body>
