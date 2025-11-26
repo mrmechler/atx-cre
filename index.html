@@ -70,9 +70,9 @@
         }
 
         .hero h1 .highlight {
-    border: none;
-    padding-bottom: 0;
-}
+            border: none;
+            padding-bottom: 0;
+        }
 
         .hero p {
             font-size: 16px;
@@ -159,6 +159,13 @@
             margin-bottom: 32px;
         }
 
+        .thankyou-message {
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: #065f46;
+            display: none;
+        }
+
         .form-card {
             background: #f9fafb;
             border-radius: 16px;
@@ -239,7 +246,7 @@
             border-top: 1px solid #e8e8e8;
             display: flex;
             justify-content: space-between;
-            align-items: center; /* vertically centers left and right blocks */
+            align-items: center;
         }
 
         .footer-left {
@@ -379,8 +386,18 @@
         <div class="form-subtext">
             Complete the form below and we'll connect you to the appropriate commercial real estate professional.
         </div>
+
+        <!-- THANK YOU MESSAGE -->
+        <div id="contact-thanks" class="thankyou-message">
+            ✅ Thanks! Your details have been received. We'll be in touch shortly.
+        </div>
+
         <div class="form-card">
             <form action="https://formspree.io/f/mwpjjpdy" method="POST">
+                
+                <!-- REDIRECT FIELD -->
+                <input type="hidden" name="_redirect" value="https://atxcre.com/#contact-thanks">
+
                 <div class="form-grid">
 
                     <div class="form-field">
@@ -493,6 +510,21 @@
     <div class="copyright">
         © 2025 ATXCRE.COM
     </div>
+
+    <!-- THANK YOU SCRIPT -->
+    <script>
+      (function() {
+        if (window.location.hash === '#contact-thanks') {
+          var msg = document.getElementById('contact-thanks');
+          if (msg) msg.style.display = 'block';
+
+          var contact = document.getElementById('contact');
+          if (contact) {
+            contact.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      })();
+    </script>
 
 </body>
 </html>
